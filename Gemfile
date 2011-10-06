@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'sinatra'
 # Server
 gem 'foreman'
+#gem 'thin'
 # Gems required for the app
 
 # HTML rendring engine HAML
