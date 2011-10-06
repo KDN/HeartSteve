@@ -62,16 +62,14 @@ helpers do
 	end
 end
 
-get '/' do
-	erb :index
-end
+
 
 post '/' do
 	if params[:url] and not params[:url].empty?
 		@shortcode = random_string 5
 		redis.setnx "links:#{@shortcode}", params[:url]
 	end
-	erb :index
+	haml :index
 end
 
 get '/:shortcode' do
