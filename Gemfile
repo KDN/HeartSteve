@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+gem 'rack', '1.3.3'
 # Framework
 gem 'sinatra'
 # Server
