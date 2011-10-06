@@ -6,7 +6,7 @@ gem 'sinatra'
 gem 'foreman'
 #gem 'thin'
 # REDIS
-# gem 'redis'
+gem 'redis'
 # HTML rendring engine HAML
 gem 'haml'
 # CSS rendring engine SASS
