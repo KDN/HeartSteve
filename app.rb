@@ -42,24 +42,37 @@ get '/', :provides => 'html' do
 	haml :index
 end
 
-  # st '/' do
-  # uri = URI::parse(params[:original])
-  # raise "Invalid URL" unless uri.kind_of? URI::HTTP or uri.kind_of? URI::HTTPS
-  # @url = Url.first_or_create(:original => uri.to_s)
-  # haml :index
-  # d
-  # 
-  # t '/:snipped' do redirect Url[params[:snipped].to_i(36)].original end
-  # 
-  # ror do haml :index end
-  # 
-  # e_in_file_templates!
-  # 
-  # taMapper.setup(:default, ENV['DATABASE_URL'] || 'mysql://root:root@localhost/snip')
-  # ass Url
-  # include DataMapper::Resource
-  # property  :id,          Serial
-  # property  :original,    String, :length => 255
-  # property  :created_at,  DateTime  
-  # def snipped() self.id.to_s(36) end  
-  # d
+
+#URL SHORTENER CODE
+
+configure do
+	require 'redis'
+	uri = URI.parse(ENV["REDISTOGO_URL"])
+	REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+end
+
+helpers do
+	include Rack::Utils
+	alias_method :h, :escape_html
+
+	def random_string(length)
+		rand(36**length).to_s(36)
+	end
+end
+
+get '/' do
+	erb :index
+end
+
+post '/' do
+	if params[:url] and not params[:url].empty?
+		@shortcode = random_string 5
+		redis.setnx "links:#{@shortcode}", params[:url]
+	end
+	erb :index
+end
+
+get '/:shortcode' do
+	@url = redis.get "links:#{params[:shortcode]}"
+	redirect @url || '/'
+end

@@ -1,0 +1,11 @@
+%section#shorturl
+	%h1 Shorten and share URL's
+	%form{:method => "post"}
+		%input#url{:name => "url", :type => "text"}
+		%input#submit{:type => "submit", :value => "shorten"}
+	.clear
+	- if @shortcode
+		.result
+			Your shortened URL is:
+			%a{:href => "http://my-shortlink-app.com/#{@shortcode}"}
+				http://my-shortlink-app.com/#{@shortcode}

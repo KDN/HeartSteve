@@ -4,8 +4,8 @@ gem 'sinatra'
 # Server
 gem 'foreman'
 #gem 'thin'
-# Gems required for the app
-
+# REDIS
+# gem 'redis'
 # HTML rendring engine HAML
 gem 'haml'
 # CSS rendring engine SASS
